@@ -2,30 +2,49 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Atarah ✨</title>
+<title>Atarah 👑</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #f8d7e3, #fceef4);
+  background: radial-gradient(circle at top, #fde2ec, #f8cdda);
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Poppins', sans-serif;
 }
 
+/* ✨ PARTICULES */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float 6s infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
 .container {
   text-align: center;
-  padding: 40px;
+  padding: 30px;
+  z-index: 2;
 }
 
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 42px;
-  color: #d63384;
+  font-size: 48px;
+  color: #c9184a;
 }
 
 .subtitle {
@@ -34,68 +53,83 @@ h1 {
 }
 
 button {
-  background: linear-gradient(135deg, #ff85a2, #ff4d88);
+  background: linear-gradient(135deg, #ff8fab, #ff4d6d);
   border: none;
-  padding: 15px 30px;
+  padding: 15px 35px;
   font-size: 18px;
   color: white;
-  border-radius: 30px;
+  border-radius: 50px;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 0 10px 25px rgba(255, 105, 135, 0.4);
 }
 
 button:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .card {
   margin-top: 40px;
-  padding: 30px;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  padding: 35px;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
   opacity: 0;
-  transform: translateY(20px);
-  transition: 0.6s;
+  transform: translateY(30px) scale(0.95);
+  transition: 0.7s;
 }
 
 .card.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .type {
-  font-size: 14px;
-  letter-spacing: 2px;
-  color: #bbb;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: #aaa;
   margin-bottom: 10px;
 }
 
-.word {
+.content {
   font-size: 28px;
   font-weight: 600;
-  color: #d63384;
+  color: #c9184a;
 }
 
-.verse {
+.reference {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #888;
   font-style: italic;
-  color: #555;
 }
-</style>
 
+</style>
 </head>
 
 <body>
 
+<script>
+for (let i = 0; i < 25; i++) {
+  let s = document.createElement("div");
+  s.className = "sparkle";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = (Math.random() * 5 + 4) + "s";
+  document.body.appendChild(s);
+}
+</script>
+
 <div class="container">
   <h1>Atarah 👑</h1>
-  <div class="subtitle">Prends un instant… puis laisse-toi surprendre</div>
+  <div class="subtitle">Prends un instant… respire… puis laisse Dieu te parler</div>
 
-  <button onclick="tirer()">Tirer</button>
+  <button onclick="tirer()">✨ Tirer</button>
 
   <div id="card" class="card">
     <div id="type" class="type"></div>
-    <div id="content" class="word"></div>
+    <div id="content" class="content"></div>
+    <div id="reference" class="reference"></div>
   </div>
 </div>
 
@@ -110,21 +144,20 @@ const mots = [
   "Peur",
   "Blessure",
   "Injustice",
-  "Comparaison",
-  "Manque de valeur"
+  "Comparaison"
 ];
 
 const versets = [
-  "Tu es précieuse à mes yeux",
-  "Je ne t’abandonnerai jamais",
-  "Ma grâce te suffit",
-  "Je t’ai appelée par ton nom",
-  "Je suis avec toi",
-  "Je restaure ton cœur",
-  "Tu es mon enfant bien-aimée",
-  "Je combats pour toi",
-  "Je te donne ma paix",
-  "Tu es une couronne de beauté"
+  { texte: "Tu es précieuse à mes yeux", ref: "Ésaïe 43:4" },
+  { texte: "Je ne t’abandonnerai jamais", ref: "Hébreux 13:5" },
+  { texte: "Ma grâce te suffit", ref: "2 Corinthiens 12:9" },
+  { texte: "Je t’ai appelée par ton nom", ref: "Ésaïe 43:1" },
+  { texte: "Je suis avec toi", ref: "Ésaïe 41:10" },
+  { texte: "Il guérit ceux qui ont le cœur brisé", ref: "Psaume 147:3" },
+  { texte: "Tu es mon enfant bien-aimée", ref: "1 Jean 3:1" },
+  { texte: "L’Éternel combattra pour toi", ref: "Exode 14:14" },
+  { texte: "Je te donne ma paix", ref: "Jean 14:27" },
+  { texte: "Tu es une couronne de beauté", ref: "Ésaïe 62:3" }
 ];
 
 function tirer() {
@@ -132,21 +165,29 @@ function tirer() {
 
   let contenu = "";
   let type = "";
+  let ref = "";
 
   if (isVerset) {
-    contenu = versets[Math.floor(Math.random() * versets.length)];
+    const v = versets[Math.floor(Math.random() * versets.length)];
+    contenu = v.texte;
+    ref = v.ref;
     type = "VERSET ✨";
   } else {
     contenu = mots[Math.floor(Math.random() * mots.length)];
     type = "MOT 💭";
+    ref = "";
   }
 
   document.getElementById("type").innerText = type;
   document.getElementById("content").innerText = contenu;
+  document.getElementById("reference").innerText = ref;
 
   const card = document.getElementById("card");
   card.classList.remove("show");
-  setTimeout(() => card.classList.add("show"), 50);
+
+  setTimeout(() => {
+    card.classList.add("show");
+  }, 100);
 }
 
 </script>
