@@ -2,9 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Atarah 👑</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -21,8 +22,8 @@ body {
 /* ✨ particules */
 .sparkle {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   background: white;
   border-radius: 50%;
   opacity: 0.5;
@@ -35,50 +36,51 @@ body {
   100% { transform: translateY(-100vh); opacity: 0;}
 }
 
+/* 📱 container mobile optimisé */
 .container {
   text-align: center;
-  padding: 30px;
-  z-index: 2;
+  padding: 20px;
+  width: 100%;
+  max-width: 350px;
+  transform: translateY(-20px);
 }
 
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 48px;
+  font-size: 36px;
   color: #c9184a;
+  margin-bottom: 5px;
 }
 
 .subtitle {
-  color: #777;
-  margin-bottom: 40px;
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 25px;
 }
 
+/* bouton */
 button {
   background: linear-gradient(135deg, #ff8fab, #ff4d6d);
   border: none;
-  padding: 15px 35px;
-  font-size: 18px;
+  padding: 12px 26px;
+  font-size: 16px;
   color: white;
   border-radius: 50px;
   cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 10px 25px rgba(255, 105, 135, 0.4);
-}
-
-button:hover {
-  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(255, 105, 135, 0.3);
 }
 
 /* 💎 carte */
 .card {
-  margin-top: 40px;
-  padding: 35px;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.9);
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.92);
   backdrop-filter: blur(10px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   opacity: 0;
-  transform: translateY(30px);
-  transition: 0.7s;
+  transform: translateY(20px);
+  transition: 0.6s;
 }
 
 .card.show {
@@ -86,25 +88,32 @@ button:hover {
   transform: translateY(0);
 }
 
+/* type */
+.type {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #bbb;
+  margin-bottom: 8px;
+}
+
 .word {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 600;
   color: #c9184a;
-  margin-bottom: 10px;
 }
 
 .verse {
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 17px;
   font-style: italic;
   color: #555;
 }
 
 .ref {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 8px;
+  font-size: 13px;
   color: #999;
 }
-
 </style>
 </head>
 
@@ -112,7 +121,7 @@ button:hover {
 
 <!-- ✨ particules -->
 <script>
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 20; i++) {
   let s = document.createElement("div");
   s.className = "sparkle";
   s.style.left = Math.random() * 100 + "vw";
@@ -123,11 +132,12 @@ for (let i = 0; i < 25; i++) {
 
 <div class="container">
   <h1>Atarah 👑</h1>
-  <div class="subtitle">Prends un instant… puis reçois</div>
+  <div class="subtitle">Prends un instant… puis laisse Dieu te parler</div>
 
   <button onclick="tirer()">✨ Tirer</button>
 
   <div id="card" class="card">
+    <div id="type" class="type"></div>
     <div id="mot" class="word"></div>
     <div id="verset" class="verse"></div>
     <div id="ref" class="ref"></div>
@@ -181,29 +191,31 @@ function tirer() {
   let mot = "";
   let verset = "";
   let ref = "";
+  let type = "";
 
   if (random < 0.33) {
-    // 💔 mot + verset
     const item = motsVersets[Math.floor(Math.random() * motsVersets.length)];
     mot = item.mot;
     verset = item.verset;
     ref = item.ref;
+    type = "💗 MOT";
 
   } else if (random < 0.66) {
-    // 📖 verset seul
     const v = versetsSeuls[Math.floor(Math.random() * versetsSeuls.length)];
-    mot = "📖 Parole";
+    mot = "";
     verset = v.texte;
     ref = v.ref;
+    type = "📖 VERSET";
 
   } else {
-    // 👑 nom de Dieu
     const n = noms[Math.floor(Math.random() * noms.length)];
     mot = n.nom;
     verset = n.sens;
-    ref = "Nom de Dieu 👑";
+    ref = "";
+    type = "👑 NOM DE DIEU";
   }
 
+  document.getElementById("type").innerText = type;
   document.getElementById("mot").innerText = mot;
   document.getElementById("verset").innerText = verset;
   document.getElementById("ref").innerText = ref;
