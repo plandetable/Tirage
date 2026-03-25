@@ -1,37 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title>Tirage de mot</title>
+<meta charset="UTF-8">
+<title>Atarah ✨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #f8d7e3, #fceef4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  text-align: center;
+  padding: 40px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: #d63384;
+}
+
+.subtitle {
+  color: #777;
+  margin-bottom: 40px;
+}
+
+button {
+  background: linear-gradient(135deg, #ff85a2, #ff4d88);
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.card {
+  margin-top: 40px;
+  padding: 30px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.6s;
+}
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.type {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #bbb;
+  margin-bottom: 10px;
+}
+
+.word {
+  font-size: 28px;
+  font-weight: 600;
+  color: #d63384;
+}
+
+.verse {
+  font-style: italic;
+  color: #555;
+}
+</style>
+
 </head>
-<body style="text-align:center; font-family:sans-serif; padding-top:50px;">
 
-  <h1>Tire ton mot 🎲</h1>
+<body>
 
-  <button onclick="tirer()" style="font-size:20px; padding:10px;">
-    Tirer un mot
-  </button>
+<div class="container">
+  <h1>Atarah 👑</h1>
+  <div class="subtitle">Prends un instant… puis laisse-toi surprendre</div>
 
-  <h2 id="resultat" style="margin-top:30px;"></h2>
+  <button onclick="tirer()">Tirer</button>
 
-  <script>
-    const mots = [
-      "Espoir",
-      "Foi",
-      "Amour",
-      "Paix",
-      "Joie",
-      "Patience",
-      "Courage",
-      "Lumière",
-      "Grâce",
-      "Vérité"
-    ];
+  <div id="card" class="card">
+    <div id="type" class="type"></div>
+    <div id="content" class="word"></div>
+  </div>
+</div>
 
-    function tirer() {
-      const index = Math.floor(Math.random() * mots.length);
-      document.getElementById("resultat").innerText = mots[index];
-    }
-  </script>
+<script>
+
+const mots = [
+  "Rejet",
+  "Abandon",
+  "Trahison",
+  "Humiliation",
+  "Solitude",
+  "Peur",
+  "Blessure",
+  "Injustice",
+  "Comparaison",
+  "Manque de valeur"
+];
+
+const versets = [
+  "Tu es précieuse à mes yeux",
+  "Je ne t’abandonnerai jamais",
+  "Ma grâce te suffit",
+  "Je t’ai appelée par ton nom",
+  "Je suis avec toi",
+  "Je restaure ton cœur",
+  "Tu es mon enfant bien-aimée",
+  "Je combats pour toi",
+  "Je te donne ma paix",
+  "Tu es une couronne de beauté"
+];
+
+function tirer() {
+  const isVerset = Math.random() > 0.5;
+
+  let contenu = "";
+  let type = "";
+
+  if (isVerset) {
+    contenu = versets[Math.floor(Math.random() * versets.length)];
+    type = "VERSET ✨";
+  } else {
+    contenu = mots[Math.floor(Math.random() * mots.length)];
+    type = "MOT 💭";
+  }
+
+  document.getElementById("type").innerText = type;
+  document.getElementById("content").innerText = contenu;
+
+  const card = document.getElementById("card");
+  card.classList.remove("show");
+  setTimeout(() => card.classList.add("show"), 50);
+}
+
+</script>
 
 </body>
 </html>
