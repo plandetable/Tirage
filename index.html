@@ -36,22 +36,23 @@ body {
   100% { transform: translateY(-100vh); opacity: 0;}
 }
 
-/* 📱 container optimisé */
+/* container parfaitement centré */
 .container {
   text-align: center;
   padding: 20px;
   width: 100%;
-  max-width: 350px;
-  transform: translateY(-60px);
+  max-width: 360px;
 }
 
+/* titre */
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 36px;
+  font-size: 34px;
   color: #c9184a;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
+/* sous-titre */
 .subtitle {
   color: #888;
   font-size: 14px;
@@ -68,16 +69,9 @@ button {
   border-radius: 50px;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(255, 105, 135, 0.3);
-  animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.04); }
-  100% { transform: scale(1); }
-}
-
-/* 💎 carte premium */
+/* 💎 carte */
 .card {
   margin-top: 25px;
   padding: 25px;
@@ -87,24 +81,6 @@ button {
   box-shadow: 
     0 10px 25px rgba(0,0,0,0.08),
     0 0 20px rgba(255, 182, 193, 0.3);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 0.6s;
-}
-
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* animation apparition */
-.fade {
-  animation: fadeIn 0.8s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px);}
-  to { opacity: 1; transform: translateY(0);}
 }
 
 /* type */
@@ -120,6 +96,7 @@ button {
   font-size: 26px;
   font-weight: 600;
   color: #c9184a;
+  animation: fade 0.4s ease;
 }
 
 .verse {
@@ -128,13 +105,22 @@ button {
   font-style: italic;
   color: #555;
   opacity: 0.85;
+  animation: fade 0.5s ease;
 }
 
 .ref {
   margin-top: 8px;
   font-size: 13px;
   color: #999;
+  animation: fade 0.6s ease;
 }
+
+/* animation douce */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 </head>
 
@@ -153,7 +139,7 @@ for (let i = 0; i < 20; i++) {
 
 <div class="container">
   <h1>Atarah 👑</h1>
-  <div class="subtitle">Prends un instant… prie... puis laisse Dieu te parler</div>
+  <div class="subtitle">Prends un instant… prie… puis laisse Dieu te parler</div>
 
   <button onclick="tirer()">✨ Tirer</button>
 
@@ -167,7 +153,6 @@ for (let i = 0; i < 20; i++) {
 
 <script>
 
-// 💔 mots + versets
 const motsVersets = [
   { mot: "Rejet", verset: "Tu es précieuse à mes yeux", ref: "Ésaïe 43:4" },
   { mot: "Abandon", verset: "Je ne t’abandonnerai jamais", ref: "Hébreux 13:5" },
@@ -181,7 +166,6 @@ const motsVersets = [
   { mot: "Doute", verset: "Fortifie-toi et prends courage", ref: "Josué 1:9" }
 ];
 
-// 📖 versets seuls
 const versetsSeuls = [
   { texte: "Tu es précieuse à mes yeux", ref: "Ésaïe 43:4" },
   { texte: "Je suis avec toi", ref: "Ésaïe 41:10" },
@@ -192,7 +176,6 @@ const versetsSeuls = [
   { texte: "Je restaure ton âme", ref: "Psaume 23:3" }
 ];
 
-// 👑 noms de Dieu
 const noms = [
   { nom: "Jehovah Rapha", sens: "L’Éternel qui me guérit" },
   { nom: "Jehovah Jireh", sens: "L’Éternel qui pourvoit pour moi" },
@@ -204,7 +187,6 @@ const noms = [
   { nom: "Jehovah Rohi", sens: "L’Éternel est mon berger" }
 ];
 
-// 🎲 tirage
 function tirer() {
 
   const random = Math.random();
@@ -223,7 +205,6 @@ function tirer() {
 
   } else if (random < 0.66) {
     const v = versetsSeuls[Math.floor(Math.random() * versetsSeuls.length)];
-    mot = "";
     verset = v.texte;
     ref = v.ref;
     type = "📖 VERSET";
@@ -232,7 +213,6 @@ function tirer() {
     const n = noms[Math.floor(Math.random() * noms.length)];
     mot = n.nom;
     verset = n.sens;
-    ref = "";
     type = "👑 NOM DE DIEU";
   }
 
@@ -240,15 +220,6 @@ function tirer() {
   document.getElementById("mot").innerText = mot;
   document.getElementById("verset").innerText = verset;
   document.getElementById("ref").innerText = ref;
-
-  const card = document.getElementById("card");
-  card.classList.remove("show");
-  card.classList.remove("fade");
-
-  setTimeout(() => {
-    card.classList.add("show");
-    card.classList.add("fade");
-  }, 100);
 }
 
 </script>
