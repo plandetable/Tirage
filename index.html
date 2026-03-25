@@ -36,7 +36,7 @@ body {
   100% { transform: translateY(-100vh); opacity: 0;}
 }
 
-/* container parfaitement centré */
+/* container */
 .container {
   text-align: center;
   padding: 20px;
@@ -71,8 +71,9 @@ button {
   box-shadow: 0 8px 20px rgba(255, 105, 135, 0.3);
 }
 
-/* 💎 carte */
+/* 💎 carte cachée au début */
 .card {
+  display: none;
   margin-top: 25px;
   padding: 25px;
   border-radius: 20px;
@@ -81,6 +82,17 @@ button {
   box-shadow: 
     0 10px 25px rgba(0,0,0,0.08),
     0 0 20px rgba(255, 182, 193, 0.3);
+}
+
+/* ✨ animation apparition */
+.card.show {
+  display: block;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
 /* type */
@@ -96,7 +108,6 @@ button {
   font-size: 26px;
   font-weight: 600;
   color: #c9184a;
-  animation: fade 0.4s ease;
 }
 
 .verse {
@@ -105,22 +116,13 @@ button {
   font-style: italic;
   color: #555;
   opacity: 0.85;
-  animation: fade 0.5s ease;
 }
 
 .ref {
   margin-top: 8px;
   font-size: 13px;
   color: #999;
-  animation: fade 0.6s ease;
 }
-
-/* animation douce */
-@keyframes fade {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 </style>
 </head>
 
@@ -216,10 +218,18 @@ function tirer() {
     type = "👑 NOM DE DIEU";
   }
 
+  const card = document.getElementById("card");
+
   document.getElementById("type").innerText = type;
   document.getElementById("mot").innerText = mot;
   document.getElementById("verset").innerText = verset;
   document.getElementById("ref").innerText = ref;
+
+  // ✨ affiche + anime
+  card.classList.remove("show");
+  setTimeout(() => {
+    card.classList.add("show");
+  }, 50);
 }
 
 </script>
