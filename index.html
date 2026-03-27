@@ -19,7 +19,6 @@ body {
   overflow: hidden;
 }
 
-/* ✨ particules */
 .sparkle {
   position: absolute;
   width: 4px;
@@ -36,7 +35,6 @@ body {
   100% { transform: translateY(-100vh); opacity: 0;}
 }
 
-/* container */
 .container {
   text-align: center;
   padding: 20px;
@@ -44,7 +42,6 @@ body {
   max-width: 360px;
 }
 
-/* titre */
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: 34px;
@@ -52,14 +49,12 @@ h1 {
   margin-bottom: 8px;
 }
 
-/* sous-titre */
 .subtitle {
   color: #888;
   font-size: 14px;
   margin-bottom: 25px;
 }
 
-/* bouton */
 button {
   background: linear-gradient(135deg, #ff8fab, #ff4d6d);
   border: none;
@@ -71,7 +66,11 @@ button {
   box-shadow: 0 8px 20px rgba(255, 105, 135, 0.3);
 }
 
-/* 💎 carte cachée au début */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .card {
   display: none;
   margin-top: 25px;
@@ -84,7 +83,6 @@ button {
     0 0 20px rgba(255, 182, 193, 0.3);
 }
 
-/* ✨ animation apparition */
 .card.show {
   display: block;
   animation: fadeIn 0.6s ease;
@@ -95,7 +93,6 @@ button {
   to { opacity: 1; transform: translateY(0);}
 }
 
-/* type */
 .type {
   font-size: 12px;
   letter-spacing: 2px;
@@ -103,7 +100,6 @@ button {
   margin-bottom: 8px;
 }
 
-/* contenu */
 .word {
   font-size: 26px;
   font-weight: 600;
@@ -128,7 +124,6 @@ button {
 
 <body>
 
-<!-- ✨ particules -->
 <script>
 for (let i = 0; i < 20; i++) {
   let s = document.createElement("div");
@@ -143,7 +138,7 @@ for (let i = 0; i < 20; i++) {
   <h1>Atarah 👑</h1>
   <div class="subtitle">Prends un instant… prie… puis laisse Dieu te parler</div>
 
-  <button onclick="tirer()">✨ Tirer</button>
+  <button id="btnTirer" onclick="tirer()">✨ Tirer</button>
 
   <div id="card" class="card">
     <div id="type" class="type"></div>
@@ -191,46 +186,59 @@ const noms = [
 
 function tirer() {
 
+  if (localStorage.getItem("tirageEffectue")) {
+    alert("Tu as déjà effectué ton tirage ✨");
+    return;
+  }
+
   const random = Math.random();
 
-  let mot = "";
-  let verset = "";
-  let ref = "";
-  let type = "";
+  let resultat = {};
 
   if (random < 0.33) {
     const item = motsVersets[Math.floor(Math.random() * motsVersets.length)];
-    mot = item.mot;
-    verset = item.verset;
-    ref = item.ref;
-    type = "💗 MOT";
+    resultat = { type: "💗 MOT", mot: item.mot, verset: item.verset, ref: item.ref };
 
   } else if (random < 0.66) {
     const v = versetsSeuls[Math.floor(Math.random() * versetsSeuls.length)];
-    verset = v.texte;
-    ref = v.ref;
-    type = "📖 VERSET";
+    resultat = { type: "📖 VERSET", mot: "", verset: v.texte, ref: v.ref };
 
   } else {
     const n = noms[Math.floor(Math.random() * noms.length)];
-    mot = n.nom;
-    verset = n.sens;
-    type = "👑 NOM DE DIEU";
+    resultat = { type: "👑 NOM DE DIEU", mot: n.nom, verset: n.sens, ref: "" };
   }
 
+  afficher(resultat);
+
+  localStorage.setItem("tirageEffectue", "true");
+  localStorage.setItem("resultatTirage", JSON.stringify(resultat));
+
+  document.getElementById("btnTirer").disabled = true;
+}
+
+function afficher(data) {
+  document.getElementById("type").innerText = data.type;
+  document.getElementById("mot").innerText = data.mot;
+  document.getElementById("verset").innerText = data.verset;
+  document.getElementById("ref").innerText = data.ref;
+
   const card = document.getElementById("card");
-
-  document.getElementById("type").innerText = type;
-  document.getElementById("mot").innerText = mot;
-  document.getElementById("verset").innerText = verset;
-  document.getElementById("ref").innerText = ref;
-
-  // ✨ affiche + anime
   card.classList.remove("show");
   setTimeout(() => {
     card.classList.add("show");
   }, 50);
 }
+
+window.onload = () => {
+  const deja = localStorage.getItem("tirageEffectue");
+  const saved = localStorage.getItem("resultatTirage");
+
+  if (deja && saved) {
+    const data = JSON.parse(saved);
+    afficher(data);
+    document.getElementById("btnTirer").disabled = true;
+  }
+};
 
 </script>
 
